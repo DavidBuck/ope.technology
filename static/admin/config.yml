@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: develop
+  branch: master
 
 site_url: https://ope.technology
 
