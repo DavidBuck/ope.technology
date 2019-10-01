@@ -15,6 +15,7 @@ const BlogIndex = props => {
         pathname={location.pathname}
       />
       <div className="max-w-3xl sm:p-4">
+        <h1 className="pb-4">Blog</h1>
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
           const blogPath = `/blog${node.fields.slug.replace(/-/g, "/")}`
