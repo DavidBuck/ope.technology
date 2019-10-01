@@ -1,62 +1,66 @@
 import React from "react"
+import Img from "gatsby-image"
 import { Link, graphql } from "gatsby"
-
-import Bio from "../components/bio"
-import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
+import Layout from "../components/layout"
 
-class BlogIndex extends React.Component {
-  render() {
-    const { data } = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+const IndexPage = props => {
+  const { data, location } = props
+  const posts = data.allMarkdownRemark.edges
+  return (
+    <Layout>
+      <SEO
+        title="home"
+        description="OPE Projects"
+        pathname={location.pathname}
+      />
+      <section className="py-4 sm:p-4 max-w-6xl">
+        <div className="font-display text-lg sm:text-6xl">
+          We create experiments using Web technolgies, Machine Learning and
+          hardware. You can explore our projects here, along with tools and
+          resources.
+        </div>
+      </section>
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO title="All posts" />
-        <Bio />
+      <section className="flex flex-wrap  max-w-7xl">
         {posts.map(({ node }) => {
           const title = node.frontmatter.title || node.fields.slug
+          const projectPath = `/project${node.fields.slug}`
+          const featuredImgFluid = node.frontmatter.featuredImage
+            ? node.frontmatter.featuredImage.childImageSharp.fluid
+            : null
           return (
-            <article key={node.fields.slug}>
-              <header>
-                <h3
-                  style={{
-                    marginBottom: rhythm(1 / 4),
-                  }}
-                >
-                  <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                    {title}
-                  </Link>
-                </h3>
-                <small>{node.frontmatter.date}</small>
-              </header>
-              <section>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: node.frontmatter.description || node.excerpt,
-                  }}
-                />
-              </section>
-            </article>
+            <div className="w-full h-auto max-w-sm my-2 sm:m-4 sm:w-94 h-94 flex-none relative">
+              <Link
+                to={projectPath}
+                className="hover:opacity-50 focus:opacity-50  active:opacity-50"
+              >
+                {featuredImgFluid && <Img fluid={featuredImgFluid} />}
+                <span className="absolute inset-0 p-5 text-black font-display text-2xl">
+                  <span>{title}: </span>
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: node.frontmatter.description || node.excerpt,
+                    }}
+                  />
+                </span>
+              </Link>
+            </div>
           )
         })}
-      </Layout>
-    )
-  }
+      </section>
+    </Layout>
+  )
 }
 
-export default BlogIndex
+export default IndexPage
 
 export const pageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(
+      sort: { fields: [frontmatter___date], order: DESC }
+      filter: { fileAbsolutePath: { glob: "**/content/projects/**/*.md" } }
+    ) {
       edges {
         node {
           excerpt
@@ -67,6 +71,13 @@ export const pageQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             title
             description
+            featuredImage {
+              childImageSharp {
+                fluid(maxWidth: 375, quality: 100) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
           }
         }
       }
