@@ -41,7 +41,7 @@ const ProjectTemplate = props => {
                   <span>← </span>
                   <Link
                     className="underline hover:line-through focus:line-through active:line-through"
-                    to={`/project/${previous.fields.slug}`}
+                    to={`/project${previous.fields.slug}`}
                     rel="prev"
                   >
                     {previous.frontmatter.title}
@@ -54,7 +54,7 @@ const ProjectTemplate = props => {
                 <>
                   <Link
                     className="underline hover:line-through focus:line-through active:line-through"
-                    to={`/project/${next.fields.slug}`}
+                    to={`/project${next.fields.slug}`}
                     rel="next"
                   >
                     {next.frontmatter.title}

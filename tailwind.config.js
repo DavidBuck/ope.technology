@@ -1,5 +1,6 @@
 module.exports = {
   important: true,
+  purge: false,
   theme: {
     fontFamily: {
       display: ["Inknut Antiqua", "serif"],
@@ -21,10 +22,10 @@ module.exports = {
         "7xl": "90rem",
       },
       width: {
-        "94": "23.437rem",
+        94: "23.437rem",
       },
       height: {
-        "94": "23.437rem",
+        94: "23.437rem",
       },
       colors: {
         bisque: "#ffe4c4",

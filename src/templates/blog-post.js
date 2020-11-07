@@ -38,7 +38,7 @@ const BlogPostTemplate = props => {
                   <span>← </span>
                   <Link
                     className="underline hover:line-through focus:line-through active:line-through"
-                    to={`/blog/${previous.fields.slug.replace(/-/g, "/")}`}
+                    to={`/blog${previous.fields.slug.replace(/-/g, "/")}`}
                     rel="prev"
                   >
                     {previous.frontmatter.title}
@@ -51,7 +51,7 @@ const BlogPostTemplate = props => {
                 <>
                   <Link
                     className="underline hover:line-through focus:line-through active:line-through"
-                    to={`/blog/${next.fields.slug.replace(/-/g, "/")}`}
+                    to={`/blog${next.fields.slug.replace(/-/g, "/")}`}
                     rel="next"
                   >
                     {next.frontmatter.title}
